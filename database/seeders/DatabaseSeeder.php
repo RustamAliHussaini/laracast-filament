@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Speaker;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +20,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
         ]);
+
+        Speaker::factory(10)->withTalks(1)->create();
 
         // \App\Models\User::factory(10)->create();
 

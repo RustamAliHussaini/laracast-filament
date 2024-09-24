@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\TalkLength;
+use App\Enums\TalkStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +22,8 @@ class Talk extends Model
         'title',
         'abstract',
         'speaker_id',
+        'status',
+        'lenght',
     ];
 
     /**
@@ -30,6 +34,8 @@ class Talk extends Model
     protected $casts = [
         'id' => 'integer',
         'speaker_id' => 'integer',
+        'status' => TalkStatus::class,
+        'lenght' => TalkLength::class,
     ];
 
     public function speaker(): BelongsTo
@@ -40,5 +46,16 @@ class Talk extends Model
     public function conferences(): BelongsToMany
     {
         return $this->belongsToMany(Conference::class);
+    }
+
+    public function approved(): void
+    {
+        $this->status = TalkStatus::APPROVED;
+        $this->save();
+    }
+    public function reject(): void
+    {
+        $this->status = TalkStatus::REJECTED;
+        $this->save();
     }
 }

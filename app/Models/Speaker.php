@@ -9,10 +9,23 @@ use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Speaker extends Model
 {
     use HasFactory;
+
+    const Qualifications = [
+            'business-leader' => 'Business Leader',
+            'charisma' => 'Charisma',
+            'first-time' => 'First Time Speaker',
+            'youtube-influencer' => 'Youtube Influencer',
+            'business-leader2' => 'Business Leader',
+            'charisma2' => 'Charisma',
+            'first-time2' => 'First Time Speaker',
+            'youtube-influencer2' => 'Youtube Influencer'
+    ];
+
 
     /**
      * The attributes that are mass assignable.
@@ -43,9 +56,15 @@ class Speaker extends Model
         return $this->belongsToMany(Conference::class);
     }
 
+    public function talks(): HasMany
+    {
+        return $this->hasMany(Talk::class);
+    }
+
     public static function getForm(): array
     {
         return [
+
             TextInput::make('name')
                 ->required()
                 ->maxLength(255),
@@ -68,18 +87,7 @@ class Speaker extends Model
                 ->bulkToggleable()
                 ->columnSpanFull()
                 ->columns(3)
-                ->options(
-                    [
-                        'business-leader' => 'Business Leader',
-                        'charisma' => 'Charisma',
-                        'first-time' => 'First Time Speaker',
-                        'youtube-influencer' => 'Youtube Influencer',
-                        'business-leader2' => 'Business Leader',
-                        'charisma2' => 'Charisma',
-                        'first-time2' => 'First Time Speaker',
-                        'youtube-influencer2' => 'Youtube Influencer'
-                    ]
-                )
+                ->options(self::Qualifications)
                 ->descriptions([
                     'business-leader' => 'Business Leader is off more importance.',
                         'charisma' => 'Charisma is the best',
