@@ -66,6 +66,11 @@ class Conference extends Model
         return $this->belongsToMany(Speaker::class);
     }
 
+    public function attendees(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Attendee::class);
+    }
+
     public static function getForm(): array
     {
         return [
