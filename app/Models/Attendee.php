@@ -11,6 +11,14 @@ class Attendee extends Model
 {
     use HasFactory;
 
+    protected $fillable=[
+        'conference_id',
+        'name',
+        'email',
+        'is_paid',
+        'ticket_cost'
+    ];
+
     public function conference(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Conference::class);
